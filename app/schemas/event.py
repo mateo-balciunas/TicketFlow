@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from decimal import Decimal
 from enum import StrEnum
 import uuid
@@ -29,7 +29,7 @@ class EventCreate(BaseModel):
     @field_validator("date")
     @classmethod
     def date_must_be_future(cls, v: datetime) -> datetime:
-        if v <= datetime.now():
+        if v <= datetime.now(UTC):
             raise ValueError("Date must be in the future")
         return v
 
