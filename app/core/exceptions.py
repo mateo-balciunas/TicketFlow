@@ -14,3 +14,7 @@ class EventNotFoundError(TicketFlowError):
 
 class EventConflictError(TicketFlowError):
     pass
+
+class TicketTierNotFoundError(TicketFlowError):
+    def __init__(self, tier_id: str) -> None:
+        super().__init__(f"Ticket tier with id {tier_id} not found")
