@@ -1,8 +1,9 @@
-from datetime import datetime, UTC
+import uuid
+from datetime import UTC, datetime
 from decimal import Decimal
 from enum import StrEnum
-import uuid
-from pydantic import BaseModel, field_validator, Field
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class EventStatus(StrEnum):

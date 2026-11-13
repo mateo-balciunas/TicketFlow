@@ -1,11 +1,17 @@
 from typing import Annotated
-from fastapi import FastAPI, Depends, Request
+
+from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
-from app.core.exceptions import EventConflictError, EventNotFoundError, TicketTierNotFoundError
-from app.schemas.health import HealthResponse
-from app.core.config import Settings, get_settings
+
 from app.api.v1.events import router as events_router
 from app.api.v1.tickettiers import router as tickettiers_router
+from app.core.config import Settings, get_settings
+from app.core.exceptions import (
+    EventConflictError,
+    EventNotFoundError,
+    TicketTierNotFoundError,
+)
+from app.schemas.health import HealthResponse
 
 settings = get_settings()
 

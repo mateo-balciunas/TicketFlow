@@ -1,7 +1,8 @@
 
 
-from datetime import datetime
 import uuid
+from datetime import UTC, datetime
+
 from app.core.exceptions import EventNotFoundError
 from app.repositories.event_repository import EventRepository
 from app.schemas.event import EventCreate, EventRead, EventStatus, EventUpdate
@@ -16,8 +17,8 @@ class EventService:
             id=uuid.uuid4(),
             organizer_id=uuid.uuid4(), # TODO: Add organizer id
             status=EventStatus.DRAFT,
-            created_at=datetime.now(),
-            updated_at=datetime.now(),
+            created_at=datetime.now(UTC),
+            updated_at=datetime.now(UTC),
             **data.model_dump(),
         )
         return self.event_repository.create(new_event)
@@ -28,11 +29,20 @@ class EventService:
             raise EventNotFoundError(f"Event with id {event_id} not found")
         return event
 
-    def get_events(self) -> list[EventRead]:
+    def get_events(
+        self,
+        status: EventStatus | None = None,
+        from_date: datetime | None = None,
+        limit: int = 20,
+        offset: int = 0,
+        ) -> list[EventRead]:
         events = self.event_repository.get_all()
-        if len(events) == 0:
-            return []
-        return events
+        if status is not None:
+            events = [e for e in events if e.status == status]
+        if from_date is not None:
+            events = [e for e in events if e.date >= from_date]
+
+        return events[offset: offset + limit]
 
     def update_event(self, event_id: uuid.UUID, data: EventUpdate) -> EventRead:
         existing_event = self.event_repository.get_by_id(event_id)

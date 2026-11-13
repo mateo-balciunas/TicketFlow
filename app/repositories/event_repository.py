@@ -1,4 +1,5 @@
 import uuid
+
 from app.schemas.event import EventRead, EventUpdate
 
 

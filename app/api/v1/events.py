@@ -1,7 +1,10 @@
 import uuid
-from fastapi import APIRouter
+from datetime import datetime
+
+from fastapi import APIRouter, Query
+
 from app.dependencies import EventServiceDep
-from app.schemas.event import EventCreate, EventRead, EventUpdate
+from app.schemas.event import EventCreate, EventRead, EventStatus, EventUpdate
 
 router = APIRouter()
 
@@ -10,11 +13,13 @@ async def create_event(service: EventServiceDep, data: EventCreate) -> EventRead
     return service.create_event(data)
 
 @router.get("/", response_model=list[EventRead])
-async def get_events(service: EventServiceDep) -> list[EventRead]:
-    return service.get_events()
+async def get_events(service: EventServiceDep, status: EventStatus | None = None, from_date: datetime | None = None,
+                    limit: int = Query(default=20, ge=1, le=100), offset: int = Query(default=0, ge=0)
+) -> list[EventRead]:
+    return service.get_events(status=status, from_date=from_date, limit=limit, offset=offset)
 
 @router.get("/{event_id}", response_model=EventRead)
-async def get_event(event_id: uuid.UUID, service: EventServiceDep) -> EventRead:
+async def get_event(event_id: uuid.UUID, service: EventServiceDep,) -> EventRead:
     return service.get_event(event_id)
 
 @router.patch("/{event_id}", response_model=EventRead)

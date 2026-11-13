@@ -1,5 +1,7 @@
 import uuid
+
 from app.schemas.tickettier import TicketTierRead, TicketTierUpdate
+
 
 class TicketTierRepository:
     def __init__(self) -> None:

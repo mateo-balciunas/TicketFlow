@@ -1,7 +1,9 @@
+import uuid
 from datetime import datetime
 from decimal import Decimal
-import uuid
+
 from pydantic import BaseModel, Field
+
 
 class TicketTierCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
@@ -16,6 +18,7 @@ class TicketTierRead(BaseModel):
     event_id: uuid.UUID = Field(..., description="The ID of the event")
     available_seats: int = Field(..., description="The number of available seats for the ticket tier")
     created_at: datetime = Field(..., description="The date and time the ticket tier was created")
+    updated_at: datetime = Field(..., description="The date and time the ticket tier was updated")
 
 class TicketTierUpdate(BaseModel):
     name: str | None = None

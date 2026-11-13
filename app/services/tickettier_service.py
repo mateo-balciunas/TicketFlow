@@ -1,8 +1,13 @@
 
 
-from datetime import UTC, datetime
 import uuid
-from app.core.exceptions import EventConflictError, EventNotFoundError, TicketTierNotFoundError
+from datetime import UTC, datetime
+
+from app.core.exceptions import (
+    EventConflictError,
+    EventNotFoundError,
+    TicketTierNotFoundError,
+)
 from app.repositories.event_repository import EventRepository
 from app.repositories.tickettier_repository import TicketTierRepository
 from app.schemas.tickettier import TicketTierCreate, TicketTierRead, TicketTierUpdate
