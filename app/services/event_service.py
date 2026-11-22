@@ -5,7 +5,8 @@ from datetime import UTC, datetime
 
 from app.core.exceptions import EventNotFoundError
 from app.repositories.event_repository import EventRepository
-from app.schemas.event import EventCreate, EventRead, EventStatus, EventUpdate
+from app.schemas.event import EventCreate, EventRead, EventUpdate
+from app.models.enums import EventStatus
 
 
 class EventService:

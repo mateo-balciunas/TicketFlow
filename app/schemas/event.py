@@ -1,24 +1,11 @@
 import uuid
 from datetime import UTC, datetime
 from decimal import Decimal
-from enum import StrEnum
+from app.models.enums import EventCategory, EventStatus
 
 from pydantic import BaseModel, Field, field_validator
 
 
-class EventStatus(StrEnum):
-    DRAFT = "draft"
-    PUBLISHED = "published"
-    CANCELLED = "cancelled"
-
-class EventCategory(StrEnum):
-    CONFERENCE = "conference"
-    MEETING = "meeting"
-    WORKSHOP = "workshop"
-    SEMINAR = "seminar"
-    WEBINAR = "webinar"
-    OTHER = "other"
-    
 class EventCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=255)
     description: str = Field(..., min_length=1, max_length=1000)

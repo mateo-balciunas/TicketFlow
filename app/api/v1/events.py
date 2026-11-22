@@ -4,7 +4,8 @@ from datetime import datetime
 from fastapi import APIRouter, Query
 
 from app.dependencies import EventServiceDep
-from app.schemas.event import EventCreate, EventRead, EventStatus, EventUpdate
+from app.schemas.event import EventCreate, EventRead, EventUpdate
+from app.models.enums import EventStatus
 
 router = APIRouter()
 
